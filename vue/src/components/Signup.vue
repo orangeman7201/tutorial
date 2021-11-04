@@ -1,15 +1,57 @@
 <template>
-  <v-container>
     <v-row class="text-center">
-      <v-col cols="12">
-        This is signup page
+
+      <!-- title -->
+      <v-col cols="12" class="text-h3">
+          sign up
       </v-col>
 
-      <v-col>
-        <v-btn to="/">戻る</v-btn>
+      <!-- form -->
+      <v-col cols="12">
+        <v-form>
+          <v-container>
+            <v-row>
+              <v-col cols=12>
+                <v-text-field
+                  v-model="name"
+                  label="name"
+                  required
+                  outlined
+                  class="mb-2"
+                ></v-text-field>
+                <v-text-field
+                  v-model="email"
+                  label="email"
+                  required
+                  outlined
+                  class="mb-2"
+                ></v-text-field>
+                <v-text-field
+                  v-model="password"
+                  label="password"
+                  required
+                  outlined
+                  class="mb-2"
+                ></v-text-field>
+                <v-text-field
+                  v-model="confirmation"
+                  label="confirmation"
+                  required
+                  outlined
+                ></v-text-field>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-form>
       </v-col>
+
+      <!-- button -->
+      <v-col>
+        <v-btn>create account</v-btn>
+      </v-col>
+
+
     </v-row>
-  </v-container>
 </template>
 
 <script>
