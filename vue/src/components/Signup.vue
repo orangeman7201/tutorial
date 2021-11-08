@@ -6,6 +6,13 @@
           sign up
       </v-col>
 
+      <!-- error_message -->
+      <v-col v-if="this.errors.length !== 0" class="red--text">
+        <div v-for="error in errors" :key="error.id">
+          <p>{{error}}</p>
+        </div>
+      </v-col>
+
       <!-- form -->
       <v-col cols="12">
         <v-form>
@@ -13,28 +20,28 @@
             <v-row>
               <v-col cols=12>
                 <v-text-field
-                  v-model="name"
+                  v-model="user.name"
                   label="name"
                   required
                   outlined
                   class="mb-2"
                 ></v-text-field>
                 <v-text-field
-                  v-model="email"
+                  v-model="user.email"
                   label="email"
                   required
                   outlined
                   class="mb-2"
                 ></v-text-field>
                 <v-text-field
-                  v-model="password"
+                  v-model="user.password"
                   label="password"
                   required
                   outlined
                   class="mb-2"
                 ></v-text-field>
                 <v-text-field
-                  v-model="confirmation"
+                  v-model="user.confirmation"
                   label="confirmation"
                   required
                   outlined
@@ -47,7 +54,7 @@
 
       <!-- button -->
       <v-col>
-        <v-btn>create account</v-btn>
+        <v-btn @click.prevent="signup">create account</v-btn>
       </v-col>
 
 
@@ -55,7 +62,36 @@
 </template>
 
 <script>
+  import axios from 'axios';
   export default {
-    name: 'HelloWorld',
+    data () {
+      return {
+        user: {
+          name: '',
+          email: '',
+          password: '',
+          confirmation: ''
+        },
+        errors: '',
+      }
+    },
+    methods: {
+      signup: function() {
+        this.errors = '';
+      axios
+      .post('http://127.0.0.1:3000/users', this.user)
+      .then(res => {
+        if(res.data.id) {
+          this.$router.push({name: 'UserDetailPage', params: { id: res.data.id } })
+        }else{
+          this.errors = res.data
+        }
+      })
+      .catch(error => {
+        console.log('error')
+        console.log(error)
+      })
+      }
+    }
   }
 </script>
